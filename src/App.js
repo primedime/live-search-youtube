@@ -17,11 +17,11 @@ class App extends Component {
       selectedVideos: null
     };
 
-    this.videoSearch('surfboards');
+    this.videoSearch('best videos 2018');
   }
 
   videoSearch(term) {
-    YTSearch({key: API_KEY, term: term}, (videos) => {
+    YTSearch({ key: API_KEY, term: term }, videos => {
       this.setState({
         videos: videos,
         selectedVideo: videos[0]
@@ -30,16 +30,15 @@ class App extends Component {
   }
 
   render() {
-    const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 300);
+    const videoSearch = _.debounce(term => {
+      this.videoSearch(term);
+    }, 300);
 
     return (
       <div className="App">
         <SearchBar onSearchTermChange={videoSearch} />
         <VideoDetail video={this.state.selectedVideo} />
-        <VideoList 
-          onVideoSelect={selectedVideo => this.setState({selectedVideo})}
-          videos={this.state.videos} 
-        />
+        <VideoList onVideoSelect={selectedVideo => this.setState({ selectedVideo })} videos={this.state.videos} />
       </div>
     );
   }
